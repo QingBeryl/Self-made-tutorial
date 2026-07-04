@@ -52,7 +52,7 @@ https://git-scm.com/install/
 
 有些常用的指令参数非常多，每次都要输入好多参数，我们可以使用别名。 
 
-1. 打开用户目录，创建.bashrc文件  部分windows系统不允许用户创建点号开头的文件，可以打开gitBash,执行touch ~/.bashrc ；
+1. 打开用户目录，创建.bashrc文件  部分windows系统不允许用户创建点号开头的文件，可以打开gitBash,执行`touch ~/.bashrc`；
 
 2. 在.bashrc文件中输入如下内容；
 
@@ -63,7 +63,7 @@ https://git-scm.com/install/
    
 3. 打开gitBash，执行以下代码使配置生效。
 
-   ```
+   ```bash
    source ~/.bashrc
    ```
 
@@ -402,3 +402,100 @@ git branch -D 分支名
 
 ## 四、Git远程仓库
 
+### 1. 常见的代码托管服务
+
+前面我们介绍了Git本地仓库，代码存放在本地自己的电脑上，但如此代码还是有丢失的风险，此时我们可以搭建一个远程仓库，将代码推送到远程仓库中，即使本地代码丢失，还可以从远程仓库中拉取回来。常见的远程仓库有如下三种：
+
+- Github：一个面向开源项目的代码托管平台，因服务器在国外，国内访问速度可能较慢；
+- Gitee：国内的一个代码托管平台，访问速度更快；
+- GitLab：一个仓库管理系统的开源项目，私密性更好。
+
+本教程以Github为例讲解，注册过程略。
+
+### 2. 创建远程仓库
+
+1. 打开Github，登陆账号，点击头像，选择Repositories（仓库）进入。
+
+   ![image-20260704173653976](static/docs/Git使用教程/images/image-20260704173653976.png)
+
+2. 点击New创建一个新的仓库。
+
+   ![image-20260704173737916](static/docs/Git使用教程/images/image-20260704173737916.png)
+
+3. 填写好仓库信息后点击Create repository（创建仓库）创建仓库。
+
+   ![image-20260704173830854](static/docs/Git使用教程/images/image-20260704173830854.png)
+
+### 3. 配置SSH公钥
+
+输入如下命令生成SSH公钥：
+
+```bash
+ssh-keygen -t rsa
+```
+
+随后一路回车，直到出现如下界面即为成功：
+
+![image-20260704175013843](static/docs/Git使用教程/images/image-20260704175013843.png)
+
+输入如下命令查看生成的SSH公钥：
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+结果如图所示，将结果复制备用：
+
+![image-20260704175454792](static/docs/Git使用教程/images/image-20260704175454792.png)
+
+打开Github，进入设置：
+
+![image-20260704175733403](static/docs/Git使用教程/images/image-20260704175733403.png)
+
+点击添加新的SSH公钥：
+
+![image-20260704175903038](static/docs/Git使用教程/images/image-20260704175903038.png)
+
+将刚才复制的内容填写到框中，名称随意，然后点击Add SSH key（添加SSH公钥）：
+
+![image-20260704180111736](static/docs/Git使用教程/images/image-20260704180111736.png)
+
+输入以下命令验证配置是否成功：
+
+```bash
+ssh -T git@github.com
+```
+
+如图所示即为成功：
+
+![image-20260704180709975](static/docs/Git使用教程/images/image-20260704180709975.png)
+
+### 4. 添加远程仓库
+
+执行以下命令，将本地仓库与远程仓库链接，远端名称好记即可，后续每次推送都需要，一般默认为origin；
+
+```bash
+git remote add <远端名称> <远程仓库路径>
+```
+
+- 远端名称：远端名称好记即可，后续每次推送都需要，一般默认为origin；
+
+- 远程仓库路径：获取远程仓库路径，在Github打开新建的仓库，选择SSH，复制后方的路径，如图所示：
+
+  ![image-20260704182013814](static/docs/Git使用教程/images/image-20260704182013814.png)
+
+执行结果如图所示：
+
+![image-20260704183905112](static/docs/Git使用教程/images/image-20260704183905112.png)
+
+### 5. 查看远程仓库
+
+使用如下命令可以查看已有的远程仓库：
+
+```bash
+git remote
+```
+
+结果如图所示：
+
+![image-20260704183926570](static/docs/Git使用教程/images/image-20260704183926570.png)
